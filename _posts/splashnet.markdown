@@ -2,7 +2,7 @@
 layout: post
 title: "SplashNet: Split-and-Share Encoders for Accurate and Efficient Typing with Surface Electromyography"
 date: 2025-06-14 18:08:39 +00:00
-image: /images/splashnet-thumbnail.jpg
+image: /images/splashnet-thumbnail.png
 categories: research
 author: "Jason Chan"
 authors: "Nima Hadidi, <strong>Jason Chan</strong>, Ebrahim Feghhi, Jonathan Kao"

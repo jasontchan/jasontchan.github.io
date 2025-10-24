@@ -2,7 +2,7 @@
 layout: post
 title: "Classifying allergic rhinitis subjects and identifying single nucleotide polymorphisms using a support vector machine approach"
 date: 2021-03-27 18:08:39 +00:00
-image: /images/iyrc-logo.jpg
+image: /images/iyrc-logo.png
 categories: research
 author: "Jason Chan"
 authors: "<strong>Jason Chan</strong>"

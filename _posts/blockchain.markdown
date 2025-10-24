@@ -2,7 +2,7 @@
 layout: post
 title: "Blockchain-enabled immutable, distributed, and highly available clinical research activity logging system for federated COVID-19 data analysis from multiple institutions"
 date: 2023-05-19 18:08:39 +00:00
-image: /images/blockchain-thumbnail.jpg
+image: /images/blockchain-thumbnail.png
 categories: research
 author: "Jason Chan"
 authors: "Tsung-Ting Kuo, Anh Pham, Maxim E Edelson, Jihoon Kim, <strong>Jason Chan</strong>, Yash Gupta, Lucila Ohno-Machado; The R2D2 Consortium"
