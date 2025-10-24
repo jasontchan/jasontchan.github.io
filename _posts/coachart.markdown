@@ -1,0 +1,14 @@
+---
+layout: post
+title: "CoachArt Internal Reimbursement Tool"
+date: 2024-04-25 21:21:53 +00:00
+image: /images/coachart-thumbnail.png
+categories: Non-profit consulting
+course: "Nova, Tech for Good"
+author: "<strong>Jason Chan</strong>, Tanaya Nawathe, Rahul Ravi, Jenny Nuo, Christine Han, Sahithi Lingampalli, Ishaan Gupta, Wolfe Pickett"
+website: https://coachart.org/
+---
+
+Project lead for a non-profit partnership with CoachArt, spearheading the development of an internal reimbursement application to improve operational efficiency for 2,400+ volunteers that mentor kids affected by serious illnesses. Integrated one-click auto-PDF generation that tracked spending reports and invoices of hundreds of volunteers per month. Developed LoFi and HiFi wireframes using Figma to match branding of non-profit.
+
+Tech: React.js, Typescript, Firebase
