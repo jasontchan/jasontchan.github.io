@@ -3,7 +3,7 @@ layout: post
 title: "Neural Controlled Mario Kart"
 date: 2024-06-21 21:21:53 +00:00
 image: /images/mariokart-thumbnail.png
-categories: research infrastructure
+categories: lab infrastructure
 course: "Neural Engineering and Computation Lab"
 author: "<strong>Jason Chan</strong>"
 code: https://github.com/jasontchan/myo-nintendo-switch

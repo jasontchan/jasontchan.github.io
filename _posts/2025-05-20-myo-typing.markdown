@@ -3,7 +3,7 @@ layout: post
 title: "Myo Armband MonkeyType"
 date: 2025-05-20 21:21:53 +00:00
 image: /images/myotyping-thumbnail.png
-categories: research infrastructure
+categories: lab infrastructure
 course: "Neural Engineering and Computation Lab"
 author: "<strong>Jason Chan</strong>"
 code: https://github.com/jasontchan/myo-typing
