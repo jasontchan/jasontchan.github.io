@@ -3,9 +3,9 @@ layout: post
 title: "CoachArt Internal Reimbursement Tool"
 date: 2024-04-25 21:21:53 +00:00
 image: /images/coachart-thumbnail.png
-categories: Non-profit consulting
+categories: non-profit consulting
 course: "Nova, Tech for Good"
-author: "<strong>Jason Chan</strong>, Tanaya Nawathe, Rahul Ravi, Jenny Nuo, Christine Han, Sahithi Lingampalli, Ishaan Gupta, Wolfe Pickett"
+authors: "<strong>Jason Chan</strong>, Tanaya Nawathe, Rahul Ravi, Jenny Nuo, Christine Han, Sahithi Lingampalli, Ishaan Gupta, Wolfe Pickett"
 website: https://coachart.org/
 ---
 

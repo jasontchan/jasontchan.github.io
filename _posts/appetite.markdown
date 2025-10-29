@@ -3,7 +3,7 @@ layout: post
 title: "Appetite"
 date: 2023-12-05 21:21:53 +00:00
 image: /images/appetite-thumbnail.png
-categories: Project
+categories: project
 course: "CS 35L"
 author: "<strong>Jason Chan</strong>, Shenran Chen, Alexis Lee, Alicia Liu, Jason Liu"
 code: https://github.com/jasontchan/appetite
