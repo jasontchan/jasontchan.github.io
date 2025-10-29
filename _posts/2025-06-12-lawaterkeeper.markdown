@@ -3,7 +3,7 @@ layout: post
 title: "LA Waterkeeper"
 date: 2025-06-12 21:21:53 +00:00
 image: /images/lawaterkeeper-thumbnail.png
-categories: non-profit consulting
+categories: consulting
 course: "Nova, Tech for Good"
 authors: "Tam Vo, Aditi Karthik, <strong>Jason Chan</strong>, Noah Hrung, Sophie Kim, Anusha Ladha, Ashley Varghese, Clare Jin, Sean Choi"
 website: https://www.novaforgood.org/work/la-waterkeeper/
