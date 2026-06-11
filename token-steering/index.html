@@ -1,0 +1,826 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="description"
+      content="Token Steering: Steering Autoregressive Vision-Language-Action Policies via Action Token Intervention — inference-time method to guide robot VLA policies with simple keyboard inputs."
+    />
+    <meta
+      name="keywords"
+      content="Token Steering, VLA, Vision-Language-Action, Robot Learning, Shared Autonomy, FAST, CoRL 2026"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Token Steering: VLA Policy Steering via Action Token Intervention
+    </title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css" />
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css" />
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css" />
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
+    />
+    <link rel="stylesheet" href="./static/css/index.css" />
+    <link rel="icon" href="./static/images/favicon.svg" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+  </head>
+  <body>
+    <!-- ─── Navbar ─── -->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start" style="flex-grow: 1; justify-content: center">
+          <a class="navbar-item" href="https://kaolab.org">
+            <span class="icon"><i class="fas fa-home"></i></span>
+          </a>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">More Research</a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="https://kaolab.org"
+                >Kao Lab — UCLA</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ─── Hero ─── -->
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">
+                Steering Autoregressive Vision-Language-Action&nbsp;Policies<br />
+                via Action Token Intervention
+              </h1>
+
+              <div
+                class="is-size-5 publication-authors"
+                style="margin-bottom: 0.4rem"
+              >
+                <span class="author-block">Jason Chan<sup>2</sup>,&nbsp;</span>
+                <span class="author-block"
+                  >Jonathan C. Kao<sup>1,2,3</sup></span
+                >
+              </div>
+
+              <div
+                class="is-size-6 publication-authors"
+                style="margin-bottom: 1.25rem; color: #555"
+              >
+                <span class="author-block"
+                  ><sup>1</sup>Electrical &amp; Computer
+                  Engineering&nbsp;&nbsp;</span
+                >
+                <span class="author-block"
+                  ><sup>2</sup>Computer Science&nbsp;&nbsp;</span
+                >
+                <span class="author-block"
+                  ><sup>3</sup
+                  >Neurobiology&nbsp;&nbsp;&middot;&nbsp;&nbsp;UCLA</span
+                >
+              </div>
+
+              <!-- Feature tags -->
+              <div class="feature-tags">
+                <div class="feature-tag">
+                  <span class="tag-label">No Retraining</span>
+                  Inference-time only
+                </div>
+                <div class="feature-tag">
+                  <span class="tag-label">Low-dimensional</span>
+                  Simple keyboard inputs
+                </div>
+                <div class="feature-tag">
+                  <span class="tag-label">Preserves dexterity</span>
+                  On-policy completions
+                </div>
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <span class="link-block">
+                    <!-- <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper (coming soon)</span>
+                </a> -->
+                  </span>
+                  <span class="link-block">
+                    <a
+                      href="#"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
+                      <span class="icon"><i class="ai ai-arxiv"></i></span>
+                      <span>arXiv (coming soon)</span>
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Teaser: side-by-side comparison ─── -->
+    <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <div class="columns is-vcentered">
+            <div class="column">
+              <p class="video-compare-label nots">
+                Autonomous (no steering) — 10% success
+              </p>
+              <div class="video-wrapper">
+                <video autoplay muted loop playsinline>
+                  <source
+                    src="./static/videos/bananadrawerNOTS.mov"
+                    type="video/mp4"
+                  />
+                  <source
+                    src="./static/videos/bananadrawerNOTS.mov"
+                    type="video/quicktime"
+                  />
+                </video>
+              </div>
+            </div>
+            <div class="column">
+              <p class="video-compare-label ts">
+                With Token Steering — 72.5% success
+              </p>
+              <div class="video-wrapper">
+                <video autoplay muted loop playsinline>
+                  <source
+                    src="./static/videos/bananadrawerTS.mov"
+                    type="video/mp4"
+                  />
+                  <source
+                    src="./static/videos/bananadrawerTS.mov"
+                    type="video/quicktime"
+                  />
+                </video>
+              </div>
+            </div>
+          </div>
+          <h2 class="subtitle has-text-centered" style="margin-top: 1rem">
+            <span class="tsname">Token Steering</span> steers an autoregressive
+            VLA with simple keyboard inputs at inference time — no retraining,
+            no fine-tuning. Same frozen policy; dramatically better task
+            success.
+          </h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Abstract ─── -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                We present <span class="tsname">Token Steering</span> (TS), a
+                method for dynamically steering trajectories generated by an
+                autoregressive vision-language-action (VLA) model through direct
+                intervention in the action-token space. TS injects
+                low-dimensional user inputs into the model's native action-token
+                representation, allowing users to influence trajectory
+                generation without modifying the underlying vision-language
+                model (VLM) architecture.
+              </p>
+              <p>
+                Because TS operates entirely at inference time, it requires no
+                additional training or finetuning. User inputs
+                <em>guide</em> rather than <em>override</em> the pretrained
+                policy, preserving the dexterity, smoothness, and task priors
+                learned by the VLA.
+              </p>
+              <p>
+                We evaluate TS on two household manipulation tasks — drawer
+                closing after object placement and state-aware object swapping —
+                and improve success rates from
+                <strong>10.0% to 72.5%</strong> and from
+                <strong>16.7% to 93.8%</strong>, respectively. By enabling
+                lightweight, intuitive steering over robot foundation models,
+                our interface has the potential to improve human-robot
+                interaction in consumer environments and broaden accessibility
+                for individuals with limited physical control.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Method ─── -->
+    <section class="section section-light">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">How Token Steering Works</h2>
+
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <div class="content has-text-justified">
+              <p>
+                <span class="tsname">Token Steering</span> exploits the discrete
+                autoregressive structure of frequency-domain (FAST) action
+                tokenization. Rather than replacing robot trajectories through
+                low-level control, TS injects user-generated
+                <em>steering tokens</em> into the beginning of the
+                autoregressive action sequence. The policy then
+                <em>autoregressively completes the remaining trajectory</em>
+                conditioned on the modified prefix — preserving smoothness, task
+                consistency, and environmental adaptation.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Method overview figure -->
+        <div class="columns is-centered">
+          <div class="column">
+            <img
+              src="./static/images/token-editing-fig1-final.jpg"
+              class="figure-embed"
+              alt="Token Steering overview figure"
+              style="width: 100%; border-radius: 10px"
+            />
+            <p class="figure-caption">
+              <strong>Figure 1.</strong>
+              (a) A low-dimensional user input (keyboard arrow key) is converted
+              to Cartesian velocity, transformed to joint velocity via inverse
+              kinematics, FAST-tokenized, and injected as a prefix into the
+              VLA's autoregressive action-token buffer. The policy
+              autoregressively generates the remaining tokens conditioned on the
+              modified prefix, visual observations, language instruction, and
+              robot state. (b) FAST tokenization orders DCT coefficients from
+              low to high frequency — early tokens encode coarse trajectory
+              structure; later tokens refine fine motion details.
+            </p>
+          </div>
+        </div>
+
+        <!-- Three-column method summary -->
+        <div class="columns is-centered" style="margin-top: 2rem">
+          <div class="column is-one-third">
+            <div class="finding-card">
+              <div class="finding-number">Step 1</div>
+              <div class="finding-title">Capture user intent</div>
+              <p class="is-size-6">
+                A keyboard direction encodes a 6-DOF intent vector
+                <strong>u ∈ ℝ⁶</strong>, scaled to a Cartesian velocity
+                <em>v</em> = <em>mu</em>.
+              </p>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="finding-card">
+              <div class="finding-number">Step 2</div>
+              <div class="finding-title">Convert &amp; tokenize</div>
+              <p class="is-size-6">
+                Cartesian velocity → joint velocity via inverse kinematics →
+                padded to action horizon H → FAST-encoded into discrete steering
+                tokens <em>z̃<sub>1:K</sub></em>.
+              </p>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="finding-card">
+              <div class="finding-number">Step 3</div>
+              <div class="finding-title">Inject &amp; let the VLA complete</div>
+              <p class="is-size-6">
+                Only a small window of tokens [b, b+w) is replaced with steering
+                tokens. The VLA autoregressively generates the rest —
+                on-distribution and task-consistent.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Key Findings ─── -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">Key Findings</h2>
+        <p class="has-text-centered" style="margin-bottom: 2.5rem; color: #555">
+          Four properties of Token Steering, each validated experimentally.
+        </p>
+
+        <!-- ── Finding 1: Injection window ── -->
+        <div
+          class="columns is-vcentered mb-6"
+          style="border-bottom: 1px solid #eee; padding-bottom: 3rem"
+        >
+          <div class="column is-two-fifths">
+            <div class="finding-number">Finding 01</div>
+            <div
+              class="finding-title"
+              style="font-size: 1.4rem; margin-bottom: 0.75rem"
+            >
+              Small windows steer; large windows overshoot.
+            </div>
+            <div class="content has-text-justified">
+              <p>
+                We swept injection window size w ∈ {1, 2, 4, 6} on a
+                directionally ambiguous block-selection task. A single token
+                (w=1) fails to communicate direction — the SIR is only 38%.
+                Window size <strong>w=2 achieves SIR=1.00</strong> with the best
+                path efficiency. Larger windows over-constrain the policy,
+                causing overshooting and reduced MPE.
+              </p>
+              <p>
+                <em>Insight:</em> small injection windows preserve the policy's
+                role in refining high-order motion while still reliably
+                communicating coarse intent.
+              </p>
+            </div>
+          </div>
+          <div class="column is-three-fifths">
+            <img
+              src="./static/images/experiment1-final.jpg"
+              class="figure-embed"
+              alt="Injection window experiment results"
+              style="width: 100%; border-radius: 10px"
+            />
+            <p class="figure-caption">
+              End-effector trajectories (left) and mean path efficiency (right)
+              across injection window sizes. Blue = intended direction; red =
+              unintended.
+            </p>
+          </div>
+        </div>
+
+        <!-- ── Finding 2: Token frequency ── -->
+        <div
+          class="columns is-vcentered mb-6"
+          style="
+            border-bottom: 1px solid #eee;
+            padding-bottom: 3rem;
+            flex-direction: row-reverse;
+          "
+        >
+          <div class="column is-two-fifths">
+            <div class="finding-number">Finding 02</div>
+            <div
+              class="finding-title"
+              style="font-size: 1.4rem; margin-bottom: 0.75rem"
+            >
+              Low-frequency tokens carry global direction.
+            </div>
+            <div class="content has-text-justified">
+              <p>
+                FAST orders tokens from low to high frequency. We fixed w=2 and
+                swept start index b ∈ {0,1,2,3}. Injecting at the lowest
+                frequencies (b=0) achieves
+                <strong>100% steering intent success</strong>. As b increases
+                toward higher-frequency tokens, SIR degrades to 12% — the
+                steering input is absorbed into local refinements and ignored.
+              </p>
+              <p>
+                <em>Insight:</em> coarse trajectory semantics are encoded at the
+                very beginning of the FAST token sequence, making the first two
+                tokens the most impactful target for user steering.
+              </p>
+            </div>
+          </div>
+          <div class="column is-three-fifths">
+            <img
+              src="./static/images/experiment2-final.jpg"
+              class="figure-embed"
+              alt="Token frequency experiment results"
+              style="width: 100%; border-radius: 10px"
+            />
+            <p class="figure-caption">
+              Trajectories and steering intent rate vs. injection start index.
+              Steering is most effective at low-frequency token positions (b=0).
+            </p>
+          </div>
+        </div>
+
+        <!-- ── Finding 3: Entropy / Diversity ── -->
+        <div
+          class="columns is-vcentered mb-6"
+          style="border-bottom: 1px solid #eee; padding-bottom: 3rem"
+        >
+          <div class="column is-two-fifths">
+            <div class="finding-number">Finding 03</div>
+            <div
+              class="finding-title"
+              style="font-size: 1.4rem; margin-bottom: 0.75rem"
+            >
+              Policy diversity is preserved after injection.
+            </div>
+            <div class="content has-text-justified">
+              <p>
+                A concern with out-of-distribution token injection is that it
+                might cause the policy to generate degenerate or repetitive
+                trajectories. We injected 2 steering tokens across 20 random
+                scenes (80 trials) and measured downstream token entropy.
+              </p>
+              <p>
+                While entropy dips at the 3rd token (immediately after
+                injection), it <strong>quickly recovers</strong>
+                to high values, and downstream token sequences remain visually
+                diverse across scenes. TS biases trajectory generation without
+                collapsing the policy's autonomous adaptability.
+              </p>
+            </div>
+          </div>
+          <div class="column is-three-fifths">
+            <img
+              src="./static/images/experiment3-final.jpg"
+              class="figure-embed"
+              alt="Policy diversity and entropy results"
+              style="width: 100%; border-radius: 10px"
+            />
+            <p class="figure-caption">
+              (Left) Diverse autoregressive token sequences after identical
+              steering-token prefixes across 20 random scenes. (Right) Token
+              entropy recovers rapidly after the injection window.
+            </p>
+          </div>
+        </div>
+
+        <!-- ── Finding 4: Language grounding ── -->
+        <div
+          class="columns is-vcentered mb-6"
+          style="flex-direction: row-reverse"
+        >
+          <div class="column is-two-fifths">
+            <div class="finding-number">Finding 04</div>
+            <div
+              class="finding-title"
+              style="font-size: 1.4rem; margin-bottom: 0.75rem"
+            >
+              Token Steering corrects language grounding failures.
+            </div>
+            <div class="content has-text-justified">
+              <p>
+                π₀-FAST achieves <strong>0% success</strong> on fine-grained
+                language commands ("pick up the green cube" vs. "pick up the
+                blue rectangular block") — always picking the wrong object due
+                to language grounding failures.
+              </p>
+              <p>
+                By injecting steering tokens toward the correct object during
+                roll-out, TS achieves
+                <strong>100% task success on both failure cases</strong>, using
+                steering tokens for less than 25% of total trajectory tokens.
+                The policy autonomously handles the remaining dexterous
+                manipulation — pick, grasp, and place.
+              </p>
+            </div>
+          </div>
+          <div class="column is-three-fifths">
+            <img
+              src="./static/images/experiment4-final.jpg"
+              class="figure-embed"
+              alt="Language grounding correction results"
+              style="width: 100%; border-radius: 10px"
+            />
+            <p class="figure-caption">
+              (a) Example corrected trajectory. (b) Success rates before and
+              after TS — 0% → 100%. (c) Steering tokens used for &lt;25% of
+              trajectory.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── User Study ─── -->
+    <section class="section section-light">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">User Study</h2>
+        <div
+          class="content has-text-centered"
+          style="max-width: 680px; margin: 0 auto 2rem"
+        >
+          <p>
+            Seven users completed two household manipulation tasks on a DROID
+            robot (Franka Panda arm + Robotiq 2F-85 gripper) running π₀-FAST
+            zero-shot. Users steered via keyboard inputs — injecting 4-token
+            windows at 0.5&nbsp;m/s Cartesian velocity. All experiments were
+            IRB-approved.
+          </p>
+        </div>
+
+        <!-- Stats table -->
+        <div class="columns is-centered" style="margin-bottom: 2.5rem">
+          <div class="column is-narrow">
+            <table class="table is-bordered result-table has-text-centered">
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>Success Rate</th>
+                  <th>Median Time (s)</th>
+                  <th>p-value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Drawer — Autonomous</td>
+                  <td>10.0%</td>
+                  <td>74.0</td>
+                  <td rowspan="2">0.003</td>
+                </tr>
+                <tr class="highlight">
+                  <td>Drawer — <span class="tsname">Token Steering</span></td>
+                  <td>72.5%</td>
+                  <td>42.0</td>
+                </tr>
+                <tr>
+                  <td>Sponge Swap — Autonomous</td>
+                  <td>16.7%</td>
+                  <td>—</td>
+                  <td rowspan="2">&lt;0.001</td>
+                </tr>
+                <tr class="highlight">
+                  <td>
+                    Sponge Swap — <span class="tsname">Token Steering</span>
+                  </td>
+                  <td>93.8%</td>
+                  <td>133.8</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="figure-caption">
+              Wilcoxon rank-sum tests; success rates (%) and median completion
+              times (s).
+            </p>
+          </div>
+        </div>
+
+        <!-- Task 1: Banana Drawer -->
+        <div style="margin-bottom: 3rem">
+          <h3 class="title is-4 has-text-centered">
+            Task 1 — Put the Banana in the Drawer
+          </h3>
+          <div class="columns is-centered">
+            <div class="column is-four-fifths">
+              <div class="content has-text-justified">
+                <p>
+                  Users pick up a toy banana and place it into an open drawer,
+                  then close the drawer by sliding it shut. The autonomous
+                  baseline achieves only 10% success — common failures include
+                  pushing the drawer from suboptimal angles (causing jamming)
+                  and losing the drawer entirely.
+                </p>
+                <p>
+                  With Token Steering, users quickly navigate the gripper into
+                  an optimal position behind the drawer and prompt it forward to
+                  close gently. Crucially, the policy generates smooth,
+                  force-appropriate closing motions — simple keyboard inputs
+                  would push too harshly on their own.
+                  <strong
+                    >Success improves from 10% → 72.5%; median completion time
+                    drops from 74s → 42s (p=0.003).</strong
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="columns is-vcentered">
+            <div class="column">
+              <p class="video-compare-label nots">Autonomous — 10% success</p>
+              <div class="video-wrapper">
+                <video controls muted loop playsinline>
+                  <source
+                    src="./static/videos/bananadrawerNOTS.mov"
+                    type="video/mp4"
+                  />
+                  <source
+                    src="./static/videos/bananadrawerNOTS.mov"
+                    type="video/quicktime"
+                  />
+                </video>
+              </div>
+            </div>
+            <div class="column">
+              <p class="video-compare-label ts">
+                With Token Steering — 72.5% success
+              </p>
+              <div class="video-wrapper">
+                <video controls muted loop playsinline>
+                  <source
+                    src="./static/videos/bananadrawerTS.mov"
+                    type="video/mp4"
+                  />
+                  <source
+                    src="./static/videos/bananadrawerTS.mov"
+                    type="video/quicktime"
+                  />
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task 2: Sponge Swap -->
+        <div>
+          <h3 class="title is-4 has-text-centered">
+            Task 2 — Swap the Sponges
+          </h3>
+          <div class="columns is-centered">
+            <div class="column is-four-fifths">
+              <div class="content has-text-justified">
+                <p>
+                  Three plates are arranged in a row; a blue and orange sponge
+                  must be swapped using the empty plate as temporary storage.
+                  This requires <em>memory</em> of past actions — something
+                  π₀-FAST fundamentally lacks, as it has no memory across action
+                  chunks.
+                </p>
+                <p>
+                  The autonomous policy achieves 0% full task success (16.7%
+                  partial progress). With Token Steering, users maintain the
+                  high-level plan (which sponge goes where) while the policy
+                  handles all low-level dexterity — grasping, placing,
+                  recovering dropped objects.
+                  <strong>Users achieve 93.8% success (p&lt;0.001)</strong>,
+                  completing a task the autonomous VLA cannot do at all.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="columns is-vcentered">
+            <div class="column">
+              <p class="video-compare-label nots">
+                Autonomous — 0% full success
+              </p>
+              <div class="video-wrapper">
+                <video controls muted loop playsinline>
+                  <source
+                    src="./static/videos/swapspongesNOTS.mov"
+                    type="video/mp4"
+                  />
+                  <source
+                    src="./static/videos/swapspongesNOTS.mov"
+                    type="video/quicktime"
+                  />
+                </video>
+              </div>
+            </div>
+            <div class="column">
+              <p class="video-compare-label ts">
+                With Token Steering — 93.8% success
+              </p>
+              <div class="video-wrapper">
+                <video controls muted loop playsinline>
+                  <source
+                    src="./static/videos/swapspongesTS.mov"
+                    type="video/mp4"
+                  />
+                  <source
+                    src="./static/videos/swapspongesTS.mov"
+                    type="video/quicktime"
+                  />
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Discussion / Broader impact ─── -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3 has-text-centered">Discussion</h2>
+            <div class="content has-text-justified">
+              <p>
+                Autoregressive VLAs unify visual, language, proprioceptive, and
+                action representations into a single token-based architecture.
+                We find that injecting a steering signal in this native token
+                space provides an intuitive interface for users to exert
+                directional influence on an autonomous trajectory. Because TS
+                operates zero-shot at inference time, it applies across tasks
+                without collecting new data or finetuning the policy.
+              </p>
+              <p>
+                Although we use keyboard inputs, TS does not depend on
+                keyboards. Any low-dimensional intent signal that can map to a
+                velocity command — including brain-computer interfaces (BCIs),
+                sip-and-puff devices, or eye gaze — could generate steering
+                tokens. This makes TS especially relevant for broadening
+                accessibility in assistive robotics, where high-dimensional
+                continuous control is often infeasible for users with limited
+                physical capacity.
+              </p>
+              <p>
+                <strong>Limitations.</strong> Autoregressive steering is
+                naturally slower than flow- or diffusion-based VLAs due to
+                next-token prediction latency. In tasks requiring rapid or
+                time-critical manipulation, flow-based VLAs may be preferable.
+                Improving inference speed for autoregressive VLAs remains an
+                open problem, though hardware improvements will likely address
+                this over time.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Related Work ─── -->
+    <section class="section section-light">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Related Work</h2>
+            <div class="content has-text-justified">
+              <p>
+                <strong>Autoregressive VLAs.</strong>
+                Token Steering is built on π₀-FAST (<a
+                  href="https://arxiv.org/abs/2501.09747"
+                  >Pertsch et al., 2025</a
+                >), which represents action trajectories in the frequency domain
+                via FAST tokenization. Related autoregressive VLAs include RT-1,
+                RT-2, and OpenVLA. Experiments use the DROID robot platform (<a
+                  href="https://arxiv.org/abs/2403.12945"
+                  >Khazatsky et al., 2025</a
+                >).
+              </p>
+              <p>
+                <strong>Diffusion Policy Steering.</strong>
+                Methods like DSRL, DiSCo, and DynaGuide steer diffusion policies
+                by intervening on the denoising process. TS targets
+                autoregressive VLAs and directly edits the discrete token stream
+                — requiring no retraining, auxiliary objective, or learned
+                correction module.
+              </p>
+              <p>
+                <strong>Shared Autonomy.</strong>
+                Classical shared autonomy blends human and robot control through
+                arbitration mechanisms. TS differs in both representation and
+                mechanism: user inputs are converted into the same tokenized
+                action representation used internally by the policy, enabling
+                lightweight inference-time steering without overriding the VLA.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── BibTeX ─── -->
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>@article{tokensteering2026,
+  title  = {Steering Autoregressive Vision-Language-Action Policies
+            via Action Token Intervention},
+  author = {Chan, Jason and Kao, Jonathan C.},
+  year   = {2026}
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ─── Footer ─── -->
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <p>
+            Website template adapted from
+            <a href="https://nerfies.github.io">Nerfies</a>, licensed under
+            <a
+              rel="license"
+              href="http://creativecommons.org/licenses/by-sa/4.0/"
+              >CC BY-SA 4.0</a
+            >.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

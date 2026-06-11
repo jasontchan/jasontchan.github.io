@@ -1,0 +1,226 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.footer .icon-link {
+  font-size: 25px;
+  color: #000;
+}
+
+.link-block a {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.tsname {
+  font-variant: small-caps;
+  font-weight: bold;
+}
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.publication-title {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.publication-venue {
+  color: #555;
+  width: fit-content;
+  font-weight: bold;
+}
+
+.publication-authors a {
+  color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+  text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-video {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  overflow: hidden;
+  border-radius: 10px !important;
+}
+
+.publication-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.results-carousel {
+  overflow: hidden;
+}
+
+.results-carousel .item {
+  margin: 5px;
+  overflow: hidden;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 0;
+  font-size: 0;
+}
+
+.results-carousel video {
+  margin: 0;
+}
+
+/* Figure images */
+.figure-embed {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+}
+
+.figure-caption {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* Side-by-side video comparisons */
+.video-compare-label {
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-family: 'Google Sans', sans-serif;
+}
+
+.video-compare-label.nots {
+  color: #e74c3c;
+}
+
+.video-compare-label.ts {
+  color: #27ae60;
+}
+
+/* Key findings cards */
+.finding-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  height: 100%;
+}
+
+.finding-number {
+  font-family: 'Google Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #3498db;
+  margin-bottom: 0.5rem;
+}
+
+.finding-title {
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+/* Stats highlight boxes */
+.stat-box {
+  background: #f0f7ff;
+  border-left: 4px solid #3498db;
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem 1.25rem;
+  margin: 1rem 0;
+  font-family: 'Google Sans', sans-serif;
+}
+
+.stat-box .stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #27ae60;
+  line-height: 1;
+}
+
+.stat-box .stat-label {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 0.15rem;
+}
+
+/* Section backgrounds */
+.section-light {
+  background-color: #f8f8f8;
+}
+
+/* Video wrapper */
+.video-wrapper {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid #e0e0e0;
+}
+
+.video-wrapper video {
+  display: block;
+  width: 100%;
+}
+
+/* Result table */
+.result-table th {
+  background: #2c3e50 !important;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.result-table tr.highlight td {
+  background: #eafaf1;
+  font-weight: 700;
+}
+
+/* Feature pill tags */
+.feature-tags {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+}
+
+.feature-tag {
+  background: #fff;
+  border: 2px solid #3498db;
+  border-radius: 50px;
+  padding: 0.4rem 1.2rem;
+  font-family: 'Google Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.feature-tag .tag-label {
+  color: #3498db;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+}
