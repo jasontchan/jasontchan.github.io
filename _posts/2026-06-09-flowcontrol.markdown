@@ -5,7 +5,7 @@ date: 2026-06-09 18:08:39 +00:00
 image: /images/flowcontrol-thumbnail.png
 categories: research
 author: "Jason Chan"
-authors: "Jonathan C. Kao, <strong>Jason Chan</strong>, Andy Wang
+authors: "Jonathan C. Kao, <strong>Jason Chan</strong>, Andy Wang"
 arxiv: https://arxiv.org/abs/2606.10180
 website: https://jcykao.github.io/flowcontrol/
 ---

@@ -5,7 +5,7 @@ date: 2026-06-12 18:08:39 +00:00
 image: /images/token-steering-thumbnail.png
 categories: research
 author: "Jason Chan"
-authors: "<strong>Jason Chan</strong>, Jonathan C. Kao
+authors: "<strong>Jason Chan</strong>, Jonathan C. Kao"
 arxiv: https://arxiv.org/abs/2606.15021
 website: https://jasontchan.github.io/token-steering/
 ---
