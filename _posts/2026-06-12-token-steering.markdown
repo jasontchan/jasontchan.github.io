@@ -6,6 +6,7 @@ image: /images/token-steering-thumbnail.png
 categories: research
 author: "Jason Chan"
 authors: "<strong>Jason Chan</strong>, Jonathan C. Kao"
+venue: "arXiv (in review)"
 arxiv: https://arxiv.org/abs/2606.15021
 website: https://jasontchan.github.io/token-steering/
 ---
