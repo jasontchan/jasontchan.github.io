@@ -6,7 +6,7 @@ image: /images/flowcontrol-thumbnail.png
 categories: research
 author: "Jason Chan"
 authors: "Jonathan C. Kao, <strong>Jason Chan</strong>, Andy Wang"
-venue: "Conference on Robot Learning (CoRL) 2026"
+venue: "The Tenth Annual Conference on Robot Learning (CoRL)"
 arxiv: https://arxiv.org/abs/2606.10180
 website: https://jcykao.github.io/flowcontrol/
 ---
